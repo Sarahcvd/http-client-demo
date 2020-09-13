@@ -15,7 +15,6 @@ public class QueryString {
         }
     }
 
-    //Complete parse test
     public String getParameter(String name) {
         return parameters.get(name);
     }
