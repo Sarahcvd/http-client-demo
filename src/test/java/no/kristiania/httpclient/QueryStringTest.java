@@ -31,5 +31,4 @@ public class QueryStringTest {
         assertEquals("200", queryString.getParameter("status"));
         assertEquals("Hello", queryString.getParameter("text"));
     }
-
 }
