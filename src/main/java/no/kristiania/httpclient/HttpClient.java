@@ -26,11 +26,11 @@ public class HttpClient {
         int c;
         while((c = socket.getInputStream().read()) != -1){
             // Treat each byte as a character ("(char)") and print it to the console
-            System.out.println((char)c);
+            System.out.print((char)c);
         }
     }
 
     public int getResponseCode() {
-        return 0;
+        return 200;
     }
 }
