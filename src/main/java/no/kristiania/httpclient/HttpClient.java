@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class HttpClient {
+    private final int responseCode;
+
     public HttpClient(String hostname, int port, String requestTarget) throws IOException {
         Socket socket = new Socket(hostname, port);
 
@@ -22,13 +24,16 @@ public class HttpClient {
         StringBuilder line = new StringBuilder();
         int c;
         while((c = socket.getInputStream().read()) != -1){
-            // Treat each byte as a character ("(char)") and print it to the console
-            if(c == '/n'){
+            // Stop reading at newline
+            if(c == '\n'){
                 break;
             }
+            // Treat each byte as a character ("(char)") and print it to the console
             line.append((char)c);
         }
         System.out.println(line);
+        String[] responseLineParts = line.toString().split(" ");
+        responseCode = Integer.parseInt(responseLineParts[1]);
     }
 
     public static void main(String[] args) throws IOException {
@@ -39,6 +44,6 @@ public class HttpClient {
     }
 
     public int getResponseCode() {
-        return 200;
+        return responseCode;
     }
 }
