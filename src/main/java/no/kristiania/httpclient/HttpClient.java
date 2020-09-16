@@ -12,7 +12,7 @@ public class HttpClient {
         // Format as specified in the HTTP specification
         // Each line is separated by \r\n (CRLF)
         // The request ends with an empty line (\r\n\r\n)
-        String request = "GET" + requestTarget + "HTTP/1.1\r\n" +
+        String request = "GET " + requestTarget + " HTTP/1.1\r\n" +
                 "Host: " + hostname + "\r\n\r\n";
         // Writes data to the server
         socket.getOutputStream().write(request.getBytes());
