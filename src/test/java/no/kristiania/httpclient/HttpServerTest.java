@@ -64,4 +64,14 @@ class HttpServerTest {
         HttpClient client = new HttpClient("localhost", 10006, "index.html");
         assertEquals("text/html", client.getResponseHeader("Content-Type"));
     }
+
+    @Test
+    void shouldReturn404IfFileNotFound() throws IOException {
+        HttpServer server = new HttpServer(10007);
+        File contentRoot = new File("target/");
+        server.setContentRoot(contentRoot);
+
+        HttpClient client = new HttpClient("localhost", 10007, "/notFound.txt");
+        assertEquals(404, client.getStatusCode());
+    }
 }
