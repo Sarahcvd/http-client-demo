@@ -13,16 +13,17 @@ public class HttpClient {
         Socket socket = new Socket(hostname, port);
 
         // Format as specified in the HTTP specification
-        // Each line is separated by \r\n (CRLF)
-        // The request ends with an empty line (\r\n\r\n)
+        // Each responseLine is separated by \r\n (CRLF)
+        // The request ends with an empty responseLine (\r\n\r\n)
         String request = "GET " + requestTarget + " HTTP/1.1\r\n" +
                 "Host: " + hostname + "\r\n\r\n";
         // Writes data to the server
         socket.getOutputStream().write(request.getBytes());
 
-        String line = readLine(socket);
-        System.out.println(line);
-        String[] responseLineParts = line.split(" ");
+        String responseLine = readLine(socket);
+
+        String[] responseLineParts = responseLine.split(" ");
+
         statusCode = Integer.parseInt(responseLineParts[1]);
 
         String headerLine;
