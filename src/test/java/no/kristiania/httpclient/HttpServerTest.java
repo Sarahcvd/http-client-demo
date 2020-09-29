@@ -49,6 +49,8 @@ class HttpServerTest {
 
         HttpClient client = new HttpClient("localhost", 10005, "/test.txt");
         assertEquals(fileContent, client.getResponseBody());
+        assertEquals("text/plain", client.getResponseHeader("Content-Type"));
+
     }
 
     @Test

@@ -16,13 +16,15 @@ public class HttpServer {
 
         // New threads executes the code in a separate "thread", that is: In parallel
         new Thread(() -> {  // Anonymous function with code that will be executed in parallel (INFINITE LOOP!!)
-            try {
-                // Accept waits for a client to try and connect - blocks until a connection is successful
-                Socket clientSocket = serverSocket.accept();
-                handleRequest(clientSocket);
-            }catch (IOException e) {
-                // If something went wrong with the connection - print out exception and try again
-                e.printStackTrace();
+            while (true){
+                try {
+                    // Accept waits for a client to try and connect - blocks until a connection is successful
+                    Socket clientSocket = serverSocket.accept();
+                    handleRequest(clientSocket);
+                }catch (IOException e) {
+                    // If something went wrong with the connection - print out exception and try again
+                    e.printStackTrace();
+                }
             }
         }).start();  // Start the threads, so the code inside executes without blocking the current thread
                      // Now the test does NOT have to wait for someone to connect
@@ -53,9 +55,13 @@ public class HttpServer {
         } else {
             File file = new File(contentRoot, requestTarget);
             statusCode = "200";
+            String contentType = "text/plain";
+            if (file.getName().endsWith(".html")){
+                contentType = "text/html";
+            }
             String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
                     "Content-Length: " + file.length() + "\r\n" +
-                    "Content-Type: text/plain\r\n" +
+                    "Content-Type: " + contentType + "\r\n" +
                     "\r\n";
             clientSocket.getOutputStream().write(response.getBytes());
 
