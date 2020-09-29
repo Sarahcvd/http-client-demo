@@ -1,5 +1,6 @@
 package no.kristiania.httpclient;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -97,5 +98,6 @@ public class HttpServer {
 
     public void setContentRoot(File contentRoot) {
         this.contentRoot = contentRoot;
+
     }
 }
