@@ -54,6 +54,15 @@ public class HttpServer {
             }
         } else {
             File file = new File(contentRoot, requestTarget);
+            if (!file.exists()){
+                body = file + " does not exist";
+                String response = "HTTP/1.1 404 Not Found\r\n" +
+                        "Content-Length: " + body.length() + "\r\n" +
+                        "\r\n" +
+                        body;
+                clientSocket.getOutputStream().write(response.getBytes());
+                return;
+            }
             statusCode = "200";
             String contentType = "text/plain";
             if (file.getName().endsWith(".html")){

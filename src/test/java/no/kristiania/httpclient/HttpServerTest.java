@@ -11,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HttpServerTest {
     @Test
-    void shouldReturnSuccessfulErrorCode() throws IOException {
+    void shouldReturnSuccessfulStatusCode() throws IOException {
         new HttpServer(10001);
         HttpClient client = new HttpClient("localhost", 10001, "/echo");
         assertEquals(200, client.getStatusCode());
     }
 
     @Test
-    void shouldReturnUnsuccessfulErrorCode() throws IOException {
+    void shouldReturnUnsuccessfulStatusCode() throws IOException {
         new HttpServer(10002);
         HttpClient client = new HttpClient("localhost", 10002, "/echo?status=404");
         assertEquals(404, client.getStatusCode());
@@ -61,7 +61,7 @@ class HttpServerTest {
 
         Files.writeString(new File(contentRoot,"index.txt").toPath(), "<h2>Hello World</h2>");
 
-        HttpClient client = new HttpClient("localhost", 10006, "index.html");
+        HttpClient client = new HttpClient("localhost", 10006, "/index.html");
         assertEquals("text/html", client.getResponseHeader("Content-Type"));
     }
 
