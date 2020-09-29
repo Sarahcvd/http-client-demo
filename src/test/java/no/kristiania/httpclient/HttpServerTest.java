@@ -50,4 +50,16 @@ class HttpServerTest {
         HttpClient client = new HttpClient("localhost", 10005, "/test.txt");
         assertEquals(fileContent, client.getResponseBody());
     }
+
+    @Test
+    void shouldReturnCorrectContentType() throws IOException {
+        HttpServer server = new HttpServer(10006);
+        File contentRoot = new File("target/");
+        server.setContentRoot(contentRoot);
+
+        Files.writeString(new File(contentRoot,"index.txt").toPath(), "<h2>Hello World</h2>");
+
+        HttpClient client = new HttpClient("localhost", 10006, "index.html");
+        assertEquals("text/html", client.getResponseHeader("Content-Type"));
+    }
 }
