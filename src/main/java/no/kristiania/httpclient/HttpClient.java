@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpClient {
-    private final int responseCode;
+    private final int statusCode;
     private Map<String, String> responseHeaders = new HashMap<>();
 
     public HttpClient(String hostname, int port, String requestTarget) throws IOException {
@@ -23,7 +23,7 @@ public class HttpClient {
         String line = readLine(socket);
         System.out.println(line);
         String[] responseLineParts = line.split(" ");
-        responseCode = Integer.parseInt(responseLineParts[1]);
+        statusCode = Integer.parseInt(responseLineParts[1]);
 
         String headerLine;
         while(!(headerLine = readLine(socket)).isEmpty()){
@@ -62,8 +62,8 @@ public class HttpClient {
         new HttpClient(hostname, port, requestTarget);
     }
 
-    public int getResponseCode() {
-        return responseCode;
+    public int getStatusCode() {
+        return statusCode;
     }
 
     public String getResponseHeader(String headerName) {

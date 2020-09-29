@@ -11,7 +11,7 @@ class HttpClientTest {
     @Test
     void shouldReadSuccessStatusCode() throws IOException {
         HttpClient httpClient = makeEchoRequest("/echo?status=200");
-        assertEquals(200, httpClient.getResponseCode());
+        assertEquals(200, httpClient.getStatusCode());
     }
 
     private HttpClient makeEchoRequest(String requestTarget) throws IOException {
@@ -21,7 +21,7 @@ class HttpClientTest {
     @Test
     void shouldReadFailureStatusCode() throws IOException {
         HttpClient httpClient = makeEchoRequest("/echo?status=401");
-        assertEquals(401, httpClient.getResponseCode());
+        assertEquals(401, httpClient.getStatusCode());
     }
 
     @Test
