@@ -1,10 +1,14 @@
 package no.kristiania.httpclient;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class HttpServer {
+
+    private static File contentRoot;
 
     public HttpServer(int port) throws IOException {
         // Open an entry point to our program for network clients
@@ -46,11 +50,21 @@ public class HttpServer {
             if(queryString.getParameter("body") != null){
                 body = queryString.getParameter("body");
             }
+        } else {
+            File file = new File(contentRoot, requestTarget);
+            statusCode = "200";
+            String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
+                    "Content-Length: " + file.length() + "\r\n" +
+                    "Content-Type: text/plain\r\n" +
+                    "\r\n";
+            clientSocket.getOutputStream().write(response.getBytes());
+
+            new FileInputStream(file).transferTo(clientSocket.getOutputStream());
         }
 
         String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
                 "Content-Length: " + body.length() + "\r\n" +
-                "Content-Type: text/html; charset=utf-8\r\n" +
+                "Content-Type: text/plain\r\n" +
                 "\r\n" +
                 body;
 
@@ -59,6 +73,11 @@ public class HttpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        new HttpServer(8080);
+        HttpServer server = new HttpServer(8080);
+        server.setContentRoot(new File("src/main/resources"));
+    }
+
+    public void setContentRoot(File contentRoot) {
+        this.contentRoot = contentRoot;
     }
 }
