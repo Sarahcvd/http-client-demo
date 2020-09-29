@@ -42,6 +42,9 @@ public class HttpServer {
         String body = "Hello <strong>World</strong>!";
 
         int questionPos = requestTarget.indexOf('?');
+
+        String requestPath = questionPos != -1 ? requestTarget.substring(0, questionPos) : requestTarget;
+
         // Looking for query-parts (if (query-parts) );
         if(questionPos != -1){
             // "body=hello"
@@ -52,8 +55,8 @@ public class HttpServer {
             if(queryString.getParameter("body") != null){
                 body = queryString.getParameter("body");
             }
-        } else {
-            File file = new File(contentRoot, requestTarget);
+        } else if(!requestPath.equals("/echo")){
+            File file = new File(contentRoot, requestPath);
             if (!file.exists()){
                 body = file + " does not exist";
                 String response = "HTTP/1.1 404 Not Found\r\n" +
