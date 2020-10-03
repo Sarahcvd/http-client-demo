@@ -7,12 +7,12 @@
 </head>
 <body>
     <h1>Workers</h1>
-    <div id="showWorkers"></div>
+    <div id="showWorker"></div>
 </body>
 <script>
-    const workers = document.getElementById("showWorkers");
-    fetch("/api/showWorkers")
+    const workers = document.getElementById("showWorker");
+    fetch("/api/showWorker")
         .then(resp => resp.text())
-        .then(html => showWorkers.innerHTML = html);
+        .then(html => showWorker.innerHTML = html);
 </script>
 </html>

@@ -21,7 +21,7 @@ public class HttpMessage {
         }
     }
 
-    public static  String readLine(Socket socket) throws IOException {
+    public static String readLine(Socket socket) throws IOException {
         // Reads one BYTE at a time, until there is nothing more to read
         // (c = socket-getInputStream().read()) != -1 means
         // Assign the next value of "read()" to c and check if it's not -1
@@ -54,9 +54,10 @@ public class HttpMessage {
         while(!(headerLine = readLine(socket)).isEmpty()){
             System.out.println(headerLine);
             int colonPos = headerLine.indexOf(':');
-            String name = headerLine.substring(0, colonPos);
-            String value = headerLine.substring(colonPos+1).trim();
-            headers.put(name, value);
+            String headerName = headerLine.substring(0, colonPos);
+            String headerValue = headerLine.substring(colonPos+1).trim();
+
+            headers.put(headerName, headerValue);
         }
         return headers;
     }
