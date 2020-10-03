@@ -1,6 +1,5 @@
 package no.kristiania.httpclient;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,8 +9,8 @@ public class QueryString {
     public QueryString(String queryString){
         for(String parameter : queryString.split("&")){
             int equalsPos = parameter.indexOf('=');
-            String value = parameter.substring(equalsPos + 1);
             String key = parameter.substring(0, equalsPos);
+            String value = parameter.substring(equalsPos + 1);
             this.parameters.put(key, value);
         }
     }
@@ -19,7 +18,9 @@ public class QueryString {
     public String getParameter(String key) {
         return parameters.get(key);
     }
-    public String getQueryName(){
+
+    //Errorcheck (not used)
+    public String getQueryString(){
         StringBuilder result = new StringBuilder();
         for(Map.Entry<String, String> parameter : parameters.entrySet()){
             if(result.length() > 0){
@@ -31,7 +32,7 @@ public class QueryString {
         }
         return "?" + result.toString();
     }
-
+    //Errorcheck (not used)
     public void addParameter(String key, String value){
         parameters.put(key, value);
     }
