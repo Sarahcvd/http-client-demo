@@ -62,6 +62,7 @@ public class HttpServer {
             // Write the response back to the client
             clientSocket.getOutputStream().write(response.getBytes());
             return;
+
         } else {
             if (requestPath.equals("/echo")) {
                 handleEchoRequest(clientSocket, requestTarget, questionPos);
@@ -83,6 +84,7 @@ public class HttpServer {
                 if (file.getName().endsWith(".html")) {
                     contentType = "text/html";
                 }
+
                 if (file.getName().endsWith(".css")){
                     contentType = "text/css";
                 }
@@ -111,6 +113,7 @@ public class HttpServer {
                 //Errorcheck, text/html?
                 "Content-Type: text/plain\r\n" +
                 "Connection: close\r\n" +
+
                 "\r\n" +
                 body;
 
@@ -133,6 +136,7 @@ public class HttpServer {
         }
         String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
                 "Content-Length: " + body.length() + "\r\n" +
+                "Contention: close\r\n" +
                 "Content-Type: text/plain\r\n" +
                 "Connection: close\r\n" +
                 "\r\n" +
